@@ -21,3 +21,13 @@ model User {
 
   @@map("users")
 }
+
+model Room {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  roomId    String   @default(uuid())
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updateAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("rooms")
+}
