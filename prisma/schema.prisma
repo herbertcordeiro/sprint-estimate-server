@@ -31,3 +31,19 @@ model Room {
 
   @@map("rooms")
 }
+
+enum StoryStatus {
+  ACTIVE
+  COMPLETED
+}
+
+model Story {
+  id          Int         @id @default(autoincrement()) @db.UnsignedInt
+  estimate    String
+  description String      @db.VarChar(255)
+  status      StoryStatus @default(ACTIVE)
+  createdAt   DateTime    @default(now()) @db.Timestamp(0)
+  updateAt    DateTime    @default(now()) @db.Timestamp(0)
+
+  @@map("stories")
+}
