@@ -24,7 +24,7 @@ model User {
 
 model Room {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt
-  roomId    String   @default(uuid())
+  inviteId  String   @default(uuid())
   name      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updateAt  DateTime @default(now()) @db.Timestamp(0)
@@ -46,4 +46,14 @@ model Story {
   updateAt    DateTime    @default(now()) @db.Timestamp(0)
 
   @@map("stories")
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement()) @db.UnsignedInt
+  userId    Int?     @db.UnsignedInt
+  value     String
+  createdAt DateTime @default(now()) @db.Timestamp(0)
+  updateAt  DateTime @default(now()) @db.Timestamp(0)
+
+  @@map("votes")
 }

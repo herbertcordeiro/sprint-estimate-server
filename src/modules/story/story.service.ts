@@ -48,7 +48,7 @@ export class StoryService {
 
   async exists(id: number) {
     if (!(await this.prisma.story.count({ where: { id } }))) {
-      throw new NotFoundException(`Room ${id} does not exist.`);
+      throw new NotFoundException(`Story ${id} does not exist.`);
     }
   }
 }

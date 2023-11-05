@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `votes` MODIFY `userId` INTEGER UNSIGNED NULL;
