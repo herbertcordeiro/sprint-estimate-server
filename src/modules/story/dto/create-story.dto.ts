@@ -1,4 +1,13 @@
-import { IsEnum, IsIn, IsString, Length } from 'class-validator';
+import {
+  IsEnum,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Length,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
 import { StoryStatus } from '@prisma/client';
 
 const validEstimateValues = [
@@ -15,6 +24,11 @@ const validEstimateValues = [
 ];
 
 export class CreateStoryDTO {
+  @IsInt()
+  @Type(() => Number)
+  @IsOptional()
+  roomId: number;
+
   @IsString()
   @Length(1, 255)
   description: string;

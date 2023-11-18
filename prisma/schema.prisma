@@ -33,6 +33,7 @@ model Room {
   name      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(0)
   updatedAt DateTime @default(now()) @db.Timestamp(0)
+  stories   Story[]
 
   @@map("rooms")
 }
@@ -45,6 +46,8 @@ model Story {
   createdAt   DateTime    @default(now()) @db.Timestamp(0)
   updatedAt   DateTime    @default(now()) @db.Timestamp(0)
   votes       Vote[]
+  room        Room?       @relation(fields: [roomId], references: [id])
+  roomId      Int?        @db.UnsignedInt
 
   @@map("stories")
 }

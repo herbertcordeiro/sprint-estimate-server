@@ -20,7 +20,12 @@ export class StoryController {
 
   @Post()
   async create(@Body() data: CreateStoryDTO) {
-    return this.storyService.create(data);
+    return this.storyService.create({
+      description: data.description,
+      estimate: data.estimate,
+      status: data.status,
+      roomId: +data.roomId,
+    });
   }
 
   @Get()
@@ -35,7 +40,12 @@ export class StoryController {
 
   @Put(':id')
   async update(@ParamId() id: number, @Body() data: UpdateStoryDTO) {
-    return this.storyService.update(id, data);
+    return this.storyService.update(id, {
+      description: data.description,
+      estimate: data.estimate,
+      status: data.status,
+      roomId: +data.roomId,
+    });
   }
 
   @Patch(':id')
@@ -43,7 +53,12 @@ export class StoryController {
     @ParamId() id: number,
     @Body() data: UpdatePartialStoryDTO,
   ) {
-    return this.storyService.updatePartial(id, data);
+    return this.storyService.updatePartial(id, {
+      description: data.description,
+      estimate: data.estimate,
+      status: data.status,
+      roomId: +data.roomId,
+    });
   }
 
   @Delete(':id')
