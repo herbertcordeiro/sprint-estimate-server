@@ -12,12 +12,17 @@ enum UserRole {
   USER
 }
 
+enum StoryStatus {
+  ACTIVE
+  COMPLETED
+}
+
 model User {
   id        Int      @id @default(autoincrement()) @db.UnsignedInt
   name      String   @db.VarChar(255)
   role      UserRole @default(USER)
   createdAt DateTime @default(now()) @db.Timestamp(0)
-  updateAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
 
   @@map("users")
 }
@@ -27,14 +32,9 @@ model Room {
   inviteId  String   @default(uuid())
   name      String   @db.VarChar(255)
   createdAt DateTime @default(now()) @db.Timestamp(0)
-  updateAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
 
   @@map("rooms")
-}
-
-enum StoryStatus {
-  ACTIVE
-  COMPLETED
 }
 
 model Story {
@@ -43,7 +43,8 @@ model Story {
   description String      @db.VarChar(255)
   status      StoryStatus @default(ACTIVE)
   createdAt   DateTime    @default(now()) @db.Timestamp(0)
-  updateAt    DateTime    @default(now()) @db.Timestamp(0)
+  updatedAt   DateTime    @default(now()) @db.Timestamp(0)
+  votes       Vote[]
 
   @@map("stories")
 }
@@ -53,7 +54,9 @@ model Vote {
   userId    Int?     @db.UnsignedInt
   value     String
   createdAt DateTime @default(now()) @db.Timestamp(0)
-  updateAt  DateTime @default(now()) @db.Timestamp(0)
+  updatedAt DateTime @default(now()) @db.Timestamp(0)
+  story     Story?   @relation(fields: [storyId], references: [id])
+  storyId   Int?     @db.UnsignedInt
 
   @@map("votes")
 }

@@ -10,6 +10,7 @@ export class VoteService {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: CreateVoteDTO) {
+    await this.exists(data.storyId, 'Story');
     return this.prisma.vote.create({ data });
   }
 
@@ -42,9 +43,11 @@ export class VoteService {
     return this.prisma.vote.delete({ where: { id } });
   }
 
-  async exists(id: number) {
+  async exists(id: number, entity?: string) {
     if (!(await this.prisma.vote.count({ where: { id } }))) {
-      throw new NotFoundException(`Room ${id} does not exist.`);
+      throw new NotFoundException(
+        `${entity ? entity : 'Vote'} ${id} does not exist.`,
+      );
     }
   }
 }

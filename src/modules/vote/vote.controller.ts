@@ -20,8 +20,11 @@ export class VoteController {
 
   @Post()
   async create(@Body() data: CreateVoteDTO) {
-    console.log(data);
-    return this.voteService.create(data);
+    return this.voteService.create({
+      value: data.value,
+      userId: +data.userId,
+      storyId: +data.storyId,
+    });
   }
 
   @Get()
@@ -36,7 +39,11 @@ export class VoteController {
 
   @Put(':id')
   async update(@ParamId() id: number, @Body() data: UpdateVoteDTO) {
-    return this.voteService.update(id, data);
+    return this.voteService.update(id, {
+      value: data.value,
+      userId: +data.userId,
+      storyId: +data.storyId,
+    });
   }
 
   @Patch(':id')
@@ -44,7 +51,11 @@ export class VoteController {
     @ParamId() id: number,
     @Body() data: UpdatePartialVoteDTO,
   ) {
-    return this.voteService.updatePartial(id, data);
+    return this.voteService.updatePartial(id, {
+      value: data.value,
+      userId: +data.userId,
+      storyId: +data.storyId,
+    });
   }
 
   @Delete(':id')

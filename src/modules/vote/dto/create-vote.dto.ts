@@ -18,9 +18,14 @@ const validVoteValues = [
 
 export class CreateVoteDTO {
   @IsInt()
-  // @Type(() => Number)
+  @Type(() => Number)
   @IsOptional()
   userId: number;
+
+  @IsInt()
+  @Type(() => Number)
+  @IsOptional()
+  storyId: number;
 
   @IsString()
   @IsIn(validVoteValues, { message: 'Invalid vote' })
