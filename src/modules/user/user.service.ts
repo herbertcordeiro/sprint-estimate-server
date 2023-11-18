@@ -1,14 +1,18 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UserRole } from '@prisma/client';
 
 import { CreateUserDTO } from './dto/create-user.dto';
 import { UpdatePatchUserDTO } from './dto/update-patch-user.dto';
 import { UpdatePutUserDTO } from './dto/update-put-user.dto';
 import { PrismaService } from '../prisma/prisma.service';
+import { ValidationService } from 'src/common/validate.service';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly validationService: ValidationService,
+  ) {}
 
   async create({ name, role }: CreateUserDTO) {
     return this.prisma.user.create({
@@ -21,12 +25,12 @@ export class UserService {
   }
 
   async getOne(id: number) {
-    await this.exists(id);
+    await this.validationService.validateEntityExists('user', id);
     return this.prisma.user.findUnique({ where: { id } });
   }
 
   async update(id: number, { name, role }: UpdatePutUserDTO) {
-    await this.exists(id);
+    await this.validationService.validateEntityExists('user', id);
     return this.prisma.user.update({
       where: { id },
       data: { name, role: role as unknown as UserRole },
@@ -34,7 +38,7 @@ export class UserService {
   }
 
   async updatePartial(id: number, { name, role }: UpdatePatchUserDTO) {
-    await this.exists(id);
+    await this.validationService.validateEntityExists('user', id);
 
     const data: any = {};
     if (name) data.name = name;
@@ -44,13 +48,7 @@ export class UserService {
   }
 
   async delete(id: number) {
-    await this.exists(id);
+    await this.validationService.validateEntityExists('user', id);
     return this.prisma.user.delete({ where: { id } });
-  }
-
-  async exists(id: number) {
-    if (!(await this.prisma.user.count({ where: { id } }))) {
-      throw new NotFoundException(`User ${id} does not exist.`);
-    }
   }
 }
