@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Put,
@@ -31,6 +32,11 @@ export class RoomController {
   @Get(':id')
   async getOne(@ParamId() id: number) {
     return this.roomService.getOne(id);
+  }
+
+  @Get('join/:id')
+  async getByInviteId(@Param('id') inviteId: string) {
+    return this.roomService.getByInviteId(inviteId);
   }
 
   @Put(':id')

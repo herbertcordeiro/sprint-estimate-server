@@ -26,6 +26,12 @@ export class RoomService {
     return this.prisma.room.findUnique({ where: { id } });
   }
 
+  async getByInviteId(inviteId: string) {
+    const room = await this.prisma.room.findUnique({ where: { inviteId } });
+    if (!room) throw new Error();
+    return room;
+  }
+
   async update(id: number, data: UpdateRoomDTO) {
     await this.validationService.validateEntityExists('room', id);
     return this.prisma.room.update({ where: { id }, data });
