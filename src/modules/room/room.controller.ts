@@ -35,8 +35,8 @@ export class RoomController {
   }
 
   @Get('join/:id')
-  async getByInviteId(@Param('id') inviteId: string) {
-    return this.roomService.getByInviteId(inviteId);
+  async getOneByInviteId(@Param('id') inviteId: string) {
+    return this.roomService.getOneByInviteId(inviteId);
   }
 
   @Put(':id')

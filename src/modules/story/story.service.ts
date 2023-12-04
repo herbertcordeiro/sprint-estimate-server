@@ -27,6 +27,15 @@ export class StoryService {
     return this.prisma.story.findUnique({ where: { id } });
   }
 
+  async getAllByRoomId(roomId: number) {
+    const stories = this.prisma.story.findMany({
+      where: { roomId },
+      orderBy: { createdAt: 'desc' },
+    });
+    if (!stories) throw new Error();
+    return stories;
+  }
+
   async update(id: number, data: UpdateStoryDTO) {
     await this.validationService.validateEntityExists('story', id);
     return this.prisma.story.update({ where: { id }, data });

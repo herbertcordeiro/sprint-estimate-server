@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   Put,
@@ -36,6 +37,12 @@ export class StoryController {
   @Get(':id')
   async getOne(@ParamId() id: number) {
     return this.storyService.getOne(id);
+  }
+
+  @Get('room/:id')
+  async getAllByRoomId(@Param('id') roomId: number) {
+    console.log(roomId);
+    return this.storyService.getAllByRoomId(+roomId);
   }
 
   @Put(':id')

@@ -26,7 +26,7 @@ export class RoomService {
     return this.prisma.room.findUnique({ where: { id } });
   }
 
-  async getByInviteId(inviteId: string) {
+  async getOneByInviteId(inviteId: string) {
     const room = await this.prisma.room.findUnique({ where: { inviteId } });
     if (!room) throw new Error();
     return room;
